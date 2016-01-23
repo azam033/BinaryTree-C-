@@ -1,0 +1,49 @@
+#include <iostream>
+
+class Tnode 
+{
+public:
+Tnode *left; //указатель левой ветки
+Tnode *right; //правой
+Tnode *parent; //указатель родителя 
+int key; //ключ, где хранятся основа нашей ветки 
+
+Tnode(int k, Tnode *par=0)
+{
+key=k;
+parent=par;
+}
+    
+void add(int k)
+{
+if(k>key) //если аргумент больше числа нашего объекта 
+{
+if(right!=0)
+right->add(k);
+else 
+right = new Tnode(k, this);
+}
+else if(k<key)
+{
+if(left!=0)
+left->add(k);
+else 
+left = new Tnode(k, this);
+}
+else 
+std::cerr<<"Error: entered value equals values of tree";
+}
+};
+
+int main()
+{
+Tnode *a = new Tnode(2); //дерево со значением 2
+a->add(7); //добавляет значение 7 (a->right)
+a->add(0); //добавляет 0 (a->left)
+a->add(10); //добавляет 10 (a->right-right)
+a->add(1);  //добавляет 1 (a->left->right)
+a->add(5);  //добавляет 5 (a->left->right->right)
+a->add(-1); //добавляет -1 (a-left->left)
+std::cout<<a->right->key;
+std::cout<<a->left->right->key;
+}
